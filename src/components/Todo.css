@@ -1,0 +1,23 @@
+.todo {
+    display: flex;
+    background-color: #f4f4f4;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+.cbox {
+    margin: 0 10px;
+}
+
+.btn {
+    color: #ff0000;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}

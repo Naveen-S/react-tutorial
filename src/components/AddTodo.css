@@ -1,0 +1,22 @@
+.todo-form{
+    display: flex;
+    flex-direction: column;
+}
+.todo-area {
+    padding: 10px;
+    outline: none;
+    border: none;
+}
+
+.todo-btn {
+    padding: 10px;
+    background-color: #0096c7;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+}
+
+.todo-btn:focus {
+    outline: none;
+}
