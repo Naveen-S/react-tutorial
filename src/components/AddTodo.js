@@ -1,29 +1,33 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import './AddTodo.css';
 
-export default class AddTodo extends Component {
-    state = {
-        todo: ''
+const AddTodo = ({
+    addTodo
+}) => {
+
+    const [ todo, setTodo ] = useState('');
+
+    const todoChange = (e) => {
+        setTodo(e.target.value);
     }
-    todoChange = (e) => {
-        this.setState({[e.target.name]: e.target.value});
-    }
-    addTodo = (e) => {
+
+    const submitTodo = (e) => {
         e.preventDefault();
-        this.props.addTodo({
+        addTodo({
             id: uuidv4(),
-            title: this.state.todo,
+            title: todo,
             completed: false
-        })
-        this.setState({todo: ''});
+        });
+        setTodo('');
     }
-    render() {
-        return (
-                <form className="todo-form" onSubmit={this.addTodo}>
-                    <input className="todo-area" type="text" name="todo" value={this.state.todo} onChange={this.todoChange} placeholder="Add Todo..."/>
-                    <input className="todo-btn" type="submit" />
-                </form>
-        )
-    }
+
+    return <div>
+        <form className="todo-form" onSubmit={submitTodo} >
+            <input className="todo-area" type="text" name="todo" value={todo} placeholder="Add Todo..." onChange={todoChange} />
+            <input className="todo-btn" type="submit" />
+        </form>
+    </div> 
 }
+
+export default AddTodo;

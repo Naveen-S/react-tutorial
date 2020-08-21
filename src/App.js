@@ -6,6 +6,7 @@ import Todos from './components/Todos';
 import Header from './components/Header';
 import AddTodo from './components/AddTodo';
 import About from './components/About';
+import SearchTodo from './components/SearchTodo';
 
 class App extends Component {
   state = {
@@ -26,6 +27,7 @@ class App extends Component {
         completed: false
       }
     ],
+    originalTodos: []
   }
   constructor() {
     super();
@@ -35,8 +37,10 @@ class App extends Component {
     axios.get(`${this.URL}?_limit=10`)
     .then((res) => {
       console.log(res.data);
-      this.setState({todos: [...this.state.todos, ...res.data]})
-    })
+      this.setState({todos: [...this.state.todos, ...res.data]}, () => {
+        this.setState({originalTodos: [...this.state.todos]});
+      })
+    });
   }
 
   markComplete = (id) => {
@@ -70,6 +74,23 @@ class App extends Component {
       this.setState({todos: [...this.state.todos, res.data]})
     })
   }
+
+  filterTodos = (search) => {
+    // 1. Filter the list of todos
+    // set the todos
+    if(search != '') {
+      this.setState({todos: this.state.originalTodos.filter((todo) => {
+        if(todo.title.indexOf(search) > -1) {
+          return true;
+        }
+        return false;
+      })});
+    } else {
+      this.setState({todos: this.state.originalTodos});
+    }
+
+  }
+
   render(){
     return (
       <BrowserRouter>
@@ -77,6 +98,7 @@ class App extends Component {
           <Header />
           <Route path="/" exact render={() => {
             return <div>
+              <SearchTodo filterTodos={this.filterTodos} />
               <AddTodo addTodo ={this.addTodo}/>
               <Todos todos={this.state.todos} markComplete={this.markComplete} deleteTodo={this.deleteTodo}/>
             </div>
